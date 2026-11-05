@@ -1,0 +1,131 @@
+/* =============================================================================
+   QBM PROTOTYPE KIT — DESIGN TOKENS  (single source of truth)
+   Every section references these variables. Never hardcode hex / px / font
+   values in a section — change it here and it propagates to all screens, which
+   is what keeps the merged prototype consistent.
+
+   ⚠ FIGMA SYNC — these values are SEEDED from the current onboarding prototype,
+   which already follows the "Mobile Freemium Provocation 2026" direction. Before
+   the merge, reconcile the exact names + values against Figma:
+     • Colors:     node 212-26886  (color token / variable frame)
+     • Typography: node 252-13724  (type spec frame)
+   Update the PRIMITIVES block below and the whole kit updates. Do not scatter
+   overrides into sections.
+   ============================================================================= */
+
+:root{
+  /* ---- PRIMITIVES : brand palette (reconcile w/ Figma 212-26886) ------------ */
+  --qb-green-900:#003E31;   /* brand / primary green            */
+  --qb-green-accent:#5BEF76;/* bright accent green              */
+  --qb-ink:#13221D;         /* near-black text                  */
+  --qb-muted:#8A9992;       /* secondary text                   */
+  --qb-field:#F0F4F6;       /* filled input / chip surface      */
+  --qb-surface-2:#F3F5F4;   /* subtle raised surface (bubbles)  */
+  --qb-stroke:#D8DFDB;      /* hairline borders                 */
+  --qb-cta:#111315;         /* neutral/dark fill (optional)     */
+  --qb-me:#16241F;          /* dark bubble                      */
+  --qb-success:#34C759;     /* iOS green (send / confirm)       */
+  --qb-danger:#E5484D;      /* error (add to Figma if missing)  */
+  --qb-warning:#F5A623;     /* warning (add to Figma if missing)*/
+  --qb-white:#FFFFFF;
+  --qb-canvas:#E7EBE9;      /* stage behind the device          */
+
+  /* aurora accent stops (launch / onboarding background) */
+  --aurora-1:#7FB6FF; --aurora-2:#72E4D0; --aurora-3:#AEEAC4;
+
+  /* ---- SEMANTIC : use THESE in sections, not the primitives ---------------- */
+  --color-brand:var(--qb-green-900);
+  --color-accent:var(--qb-green-accent);
+  --color-text:var(--qb-ink);
+  --color-text-muted:var(--qb-muted);
+  --color-surface:var(--qb-white);
+  --color-surface-alt:var(--qb-field);
+  --color-surface-raised:var(--qb-surface-2);
+  --color-border:var(--qb-stroke);
+  --color-cta:var(--qb-green-900);   /* PRIMARY CTA = brand green #003E31     */
+  --color-cta-text:var(--qb-white);
+  --color-cta-dark:var(--qb-cta);    /* optional dark/neutral button          */
+  --color-on-brand:var(--qb-white);
+  --color-success:var(--qb-success);
+  --color-danger:var(--qb-danger);
+  --color-warning:var(--qb-warning);
+  --color-link:var(--qb-green-900);
+
+  /* ---- TYPOGRAPHY (reconcile w/ Figma 252-13724) --------------------------- */
+  /* Tally ships Regular(400) + Medium(600) only. 600 is the heaviest weight.   */
+  --font-sans:'Tally',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --fw-regular:400;
+  --fw-medium:600;   /* "semibold/bold" in this system = Medium 600            */
+
+  /* Type ramp — {weight size/line-height letter-spacing}. iOS-aligned.        */
+  --type-display:var(--fw-medium) 34px/1.08 var(--font-sans);   /* hero        */
+  --type-title:var(--fw-medium) 28px/1.14 var(--font-sans);     /* screen title*/
+  --type-title-ls:-0.02em;
+  --type-headline:var(--fw-medium) 20px/1.25 var(--font-sans);  /* section head*/
+  --type-body:var(--fw-regular) 16px/1.44 var(--font-sans);     /* body        */
+  --type-body-emph:var(--fw-medium) 16px/1.44 var(--font-sans); /* AI text/emph*/
+  --type-callout:var(--fw-regular) 15px/1.33 var(--font-sans);
+  --type-subhead:var(--fw-medium) 14px/1.3 var(--font-sans);
+  --type-footnote:var(--fw-regular) 13px/1.3 var(--font-sans);
+  --type-caption:var(--fw-medium) 12px/1.2 var(--font-sans);
+  --tracking-tight:-0.01em;
+
+  /* ---- RADII : 8 / 16 / 24 scale — prefer 24 on large surfaces ------------- */
+  --radius-sm:8px;          /* chips, icon tiles, inner list segments          */
+  --radius-md:16px;         /* inputs, medium tiles                            */
+  --radius-lg:24px;         /* cards, sheets, large surfaces (default)         */
+  --radius-pill:999px;      /* buttons / CTAs are full pills                    */
+  /* semantic aliases */
+  --radius-card:var(--radius-lg);   /* 24 */
+  --radius-field:var(--radius-md);  /* 16 */
+  --radius-sheet:var(--radius-lg);  /* 24 */
+  --radius-chip:var(--radius-sm);   /* 8  */
+  --radius-tile:var(--radius-sm);   /* small icon tile */
+
+  /* ---- SPACING (4pt grid) -------------------------------------------------- */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:20px; --space-6:24px; --space-7:32px; --space-8:40px;
+  --gutter:20px;            /* default screen side padding                      */
+
+  /* ---- ELEVATION ----------------------------------------------------------- */
+  --shadow-card:0 1px 2px rgba(0,25,18,.04),0 8px 24px rgba(0,25,18,.06);
+  --shadow-sheet:0 -8px 40px rgba(0,25,18,.16);
+  --shadow-pop:0 12px 32px rgba(0,25,18,.18);
+
+  /* ---- MOTION -------------------------------------------------------------- */
+  --ease-ios:cubic-bezier(.22,1,.36,1);
+  --ease-in-out:cubic-bezier(.4,0,.2,1);
+  --dur-fast:180ms;
+  --dur:320ms;
+  --dur-slow:420ms;
+
+  /* ---- DEVICE METRICS (iPhone 17 / iOS 27, exact) — see frame.css ---------- */
+  --screen-w:402px;         /* iPhone 17 logical width                          */
+  --screen-h:874px;         /* iPhone 17 logical height                         */
+  --screen-radius:62px;     /* iPhone 17 display corner radius (62pt)          */
+  --bezel:12px;             /* bezel thickness                                  */
+  --device-radius:74px;     /* outer corner = screen radius + bezel (concentric)*/
+  --island-w:125px;
+  --island-h:37px;
+  --statusbar-h:62px;       /* matches uploaded Status bar.svg (402×62)        */
+  --safe-top:62px;          /* clear the status bar                            */
+  --safe-bottom:34px;       /* clear the home indicator                        */
+}
+
+/* ---- ADDED FOR NUDGE PROTOTYPE (provisional — confirm vs Figma) ------------- */
+:root{
+  --font-ids:'Avenir Next','AvenirNext forINTUIT',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --fw-ids-medium:500;
+  --color-qb-green:#2CA01C;            /* intent picker CTA / progress / icons   */
+  --color-text-ids:#393A3C;            /* intent picker heading + row labels     */
+  --color-text-primary:#21262A;        /* nudge title                            */
+  --color-text-secondary:#4C555B;      /* nudge description                      */
+  --color-container-border:#C3CED5;    /* nudge card border                      */
+  --color-home-bg:#F5F9FC;             /* homepage canvas                        */
+  --color-shadow-ids:rgba(76,85,91,.2);
+  --shadow-level-4:0 6px 24px var(--color-shadow-ids);
+  --shadow-picker-card:0 1px 4px rgba(0,0,0,.16);
+  --radius-btn-ids:6px;
+}
+:root{--color-divider:#D5DEE3;}
+:root{--color-hero-dark:#002B21;--color-hero-fade:#D4D7DC;--color-track:#E1E7EB;--color-track-fill:#4C555B;--color-badge-bg:#E4EEF9;--color-badge-text:#205EA3;--color-btn-outline:#003E31;--color-page:#F5F7F9;}

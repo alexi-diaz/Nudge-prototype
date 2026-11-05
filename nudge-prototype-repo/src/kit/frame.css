@@ -1,0 +1,100 @@
+/* =============================================================================
+   DEVICE FRAME — iPhone 17 / iOS 27
+   Renders the hardware bezel, Dynamic Island cutout, display corner radius,
+   status bar, home indicator, and an optional aurora background. Section code
+   never touches this — you mount screens into #app (see kit.js).
+   ============================================================================= */
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;height:100%;}
+body{
+  font:var(--type-body);
+  color:var(--color-text);
+  background:var(--qb-canvas);
+  display:flex;align-items:center;justify-content:center;min-height:100vh;padding:26px;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+.stage{display:flex;flex-direction:column;align-items:center;gap:14px;}
+
+/* ---- hardware ------------------------------------------------------------- */
+.device{
+  position:relative;
+  width:calc(var(--screen-w) + var(--bezel) * 2);
+  height:calc(var(--screen-h) + var(--bezel) * 2);
+  border-radius:var(--device-radius);
+  background:#0a0a0c;padding:var(--bezel);
+  box-shadow:0 20px 50px rgba(0,25,18,.2);
+}
+/* Dynamic Island cutout */
+.island{
+  position:absolute;top:13px;left:50%;transform:translateX(-50%);
+  width:var(--island-w);height:var(--island-h);
+  background:#000;border-radius:20px;z-index:60;
+}
+.island::after{ /* front camera dot */
+  content:"";position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  width:9px;height:9px;border-radius:50%;
+  background:#15161a;box-shadow:inset 0 0 0 1.5px #050506;
+}
+.screen{
+  position:relative;width:100%;height:100%;
+  border-radius:var(--screen-radius);overflow:hidden;
+  background:var(--color-surface);isolation:isolate;
+}
+
+/* ---- app mount : sections render here, and scroll under the chrome --------- */
+.kit-app{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
+.kit-app::-webkit-scrollbar{display:none;}
+
+/* ---- status bar (uploaded Status bar.svg, 402×62; always on top) ---------- */
+.statusbar{
+  position:absolute;top:0;left:0;right:0;height:var(--statusbar-h);
+  z-index:50;pointer-events:none;
+}
+.statusbar > svg{display:block;width:100%;height:auto;}
+/* iOS behavior: on a dark background, status content turns white.
+   Toggle with Kit.statusBar('dark') / ('light'). Default = light bg / dark content. */
+.statusbar.on-dark svg path,
+.statusbar.on-dark svg rect{fill:#fff;}
+.statusbar.on-dark svg rect[stroke]{stroke:#fff;}
+
+/* ---- home indicator ------------------------------------------------------ */
+.homebar{
+  position:absolute;bottom:7px;left:50%;transform:translateX(-50%);
+  width:130px;height:5px;border-radius:3px;background:rgba(0,0,0,.26);z-index:95;
+}
+
+/* ---- aurora background (optional; toggle with .no-aurora on .screen) ------- */
+.aurora{
+  position:absolute;top:0;left:0;right:0;height:330px;z-index:0;overflow:hidden;pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
+          mask:linear-gradient(#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
+  opacity:.9;
+}
+.screen.no-aurora .aurora{display:none;}
+.aurora i{position:absolute;border-radius:50%;filter:blur(46px);will-change:transform;}
+.aurora .a1{width:270px;height:210px;top:-96px;left:-50px;background:var(--aurora-1);opacity:.42;animation:au1 27s ease-in-out infinite;}
+.aurora .a2{width:250px;height:210px;top:-116px;left:120px;background:var(--aurora-2);opacity:.40;animation:au2 33s ease-in-out infinite;}
+.aurora .a3{width:230px;height:190px;top:-86px;left:250px;background:var(--aurora-3);opacity:.34;animation:au3 30s ease-in-out infinite;}
+@keyframes au1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,26px)}}
+@keyframes au2{0%,100%{transform:translate(0,0)}50%{transform:translate(-34px,30px)}}
+@keyframes au3{0%,100%{transform:translate(0,0)}50%{transform:translate(-26px,-18px)}}
+
+/* =============================================================================
+   OPTIONAL COMPONENT — iOS 27 frosted top bar
+   Use for a screen nav/title bar. Content scrolls UNDER it (give your scroll
+   content padding-top:112px). Build it with Kit.topBar(...) or copy this markup:
+     <div class="topbar"><div class="tb-blur"></div><div class="tb-tint"></div>
+       <div class="topbar-row"> …title / back / actions … </div></div>
+   ============================================================================= */
+.topbar{position:absolute;top:0;left:0;right:0;z-index:55;pointer-events:none;}
+.topbar .topbar-row{position:relative;z-index:3;pointer-events:auto;
+  display:flex;align-items:center;gap:12px;min-height:44px;padding:calc(var(--safe-top) + 4px) 20px 8px;}
+.tb-blur{position:absolute;top:0;left:0;right:0;height:122px;z-index:0;
+  -webkit-backdrop-filter:blur(26px) saturate(115%);backdrop-filter:blur(26px) saturate(115%);
+  -webkit-mask:linear-gradient(180deg,#000 0%,#000 78%,rgba(0,0,0,.5) 91%,transparent 100%);
+          mask:linear-gradient(180deg,#000 0%,#000 78%,rgba(0,0,0,.5) 91%,transparent 100%);}
+.tb-tint{position:absolute;top:0;left:0;right:0;height:122px;z-index:1;
+  background:linear-gradient(180deg,rgba(248,250,249,.95) 0%,rgba(248,250,249,.93) 77%,rgba(248,250,249,.5) 91%,rgba(248,250,249,0) 100%);}
+.topbar .title{font:var(--type-headline);letter-spacing:var(--tracking-tight);}
+.topbar .spacer{flex:1;}

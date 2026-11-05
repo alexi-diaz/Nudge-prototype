@@ -1,0 +1,97 @@
+/* =============================================================================
+   SHARED COMPONENTS — use these in every section so the merged app is coherent.
+   Add new SHARED primitives here (not in a section file). Section-specific one-
+   offs can live in the section, but anything reusable belongs here.
+   ============================================================================= */
+
+/* screen scaffold — a section screen usually starts with <div class="screen-pad"> */
+.screen-pad{padding:var(--safe-top) var(--gutter) var(--safe-bottom);min-height:100%;}
+.screen-pad.has-topbar{padding-top:112px;}          /* when using .topbar        */
+.stack{display:flex;flex-direction:column;}
+.stack.g2{gap:var(--space-2)} .stack.g3{gap:var(--space-3)}
+.stack.g4{gap:var(--space-4)} .stack.g6{gap:var(--space-6)}
+.row{display:flex;align-items:center;gap:var(--space-3);}
+.row.between{justify-content:space-between;}
+.spacer{flex:1;}
+
+/* type helpers */
+.t-display{font:var(--type-display);letter-spacing:var(--type-title-ls);margin:0;}
+.t-title{font:var(--type-title);letter-spacing:var(--type-title-ls);margin:0;}
+.t-headline{font:var(--type-headline);letter-spacing:var(--tracking-tight);margin:0;}
+.t-body{font:var(--type-body);margin:0;}
+.t-emph{font:var(--type-body-emph);margin:0;}
+.t-callout{font:var(--type-callout);margin:0;}
+.t-subhead{font:var(--type-subhead);margin:0;}
+.t-foot{font:var(--type-footnote);color:var(--color-text-muted);margin:0;}
+.t-muted{color:var(--color-text-muted);}
+.t-brand{color:var(--color-brand);}
+
+/* buttons */
+.btn{appearance:none;border:0;cursor:pointer;font:var(--type-body-emph);
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:54px;padding:0 22px;border-radius:var(--radius-pill);
+  transition:transform var(--dur-fast) var(--ease-ios),opacity var(--dur-fast);}
+.btn:active{transform:scale(.97);}
+.btn-cta{background:var(--color-cta);color:var(--color-cta-text);width:100%;}      /* PRIMARY = green #003E31 */
+.btn-brand{background:var(--color-brand);color:var(--color-on-brand);width:100%;}   /* alias of primary        */
+.btn-secondary{background:var(--color-surface-alt);color:var(--color-text);width:100%;}
+.btn-dark{background:var(--color-cta-dark);color:#fff;width:100%;}                   /* optional neutral/dark   */
+.btn-ghost{background:transparent;color:var(--color-brand);height:auto;padding:6px 4px;}
+.btn[disabled]{opacity:.4;pointer-events:none;}
+
+/* circular icon button (e.g. back) */
+.icon-btn{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text);cursor:pointer;}
+.icon-btn.plain{background:transparent;border:0;}
+
+/* cards */
+.card{background:var(--color-surface-alt);border-radius:var(--radius-card);padding:var(--space-5);}
+.card.raised{background:var(--color-surface);box-shadow:var(--shadow-card);}
+
+/* grouped list (iOS inset) — first/last children get big outer radii */
+.list{display:flex;flex-direction:column;gap:2px;}
+.list .row-item{background:var(--color-surface-alt);padding:16px 18px;display:flex;align-items:center;gap:14px;
+  min-height:64px;border-radius:var(--radius-sm);}
+.list .row-item:first-child{border-radius:var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);}
+.list .row-item:last-child{border-radius:var(--radius-sm) var(--radius-sm) var(--radius-lg) var(--radius-lg);}
+.list .row-item:only-child{border-radius:var(--radius-lg);}
+.row-item .lead{width:40px;height:40px;border-radius:var(--radius-sm);background:var(--color-surface);
+  display:flex;align-items:center;justify-content:center;flex:0 0 40px;}
+.row-item .body{flex:1;min-width:0;}
+.row-item .body .title{font:var(--type-body-emph);}
+.row-item .body .sub{font:var(--type-footnote);color:var(--color-text-muted);}
+
+/* chips / suggestions */
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius-chip);
+  background:var(--color-surface-alt);font:var(--type-subhead);cursor:pointer;border:1px solid transparent;}
+.chip.sel{background:#D8FFDB;}
+
+/* inputs */
+.field{width:100%;height:56px;padding:0 16px;border-radius:var(--radius-field);
+  background:var(--color-surface-alt);border:1px solid transparent;font:var(--type-body);color:var(--color-text);}
+.field:focus{outline:0;border-color:var(--color-border);background:var(--color-surface);}
+.field-label{font:var(--type-subhead);color:var(--color-text-muted);margin:0 0 6px 2px;}
+
+/* bottom sheet */
+.sheet-scrim{position:absolute;inset:0;z-index:120;background:rgba(10,20,16,.32);
+  opacity:0;transition:opacity var(--dur) var(--ease-in-out);}
+.sheet-scrim.show{opacity:1;}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:121;background:var(--color-surface);
+  border-radius:var(--radius-sheet) var(--radius-sheet) 0 0;padding:22px var(--gutter) calc(var(--safe-bottom) + 12px);
+  box-shadow:var(--shadow-sheet);transform:translateY(100%);transition:transform var(--dur-slow) var(--ease-ios);}
+.sheet.show{transform:translateY(0);}
+.sheet .grabber{width:38px;height:5px;border-radius:3px;background:var(--color-border);margin:0 auto 14px;}
+
+/* section launcher (merged home screen of the kit) */
+.launcher{padding:calc(var(--safe-top) + 10px) var(--gutter) var(--safe-bottom);}
+.launcher h1{font:var(--type-title);letter-spacing:var(--type-title-ls);margin:0 0 4px;}
+.launcher .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+.launcher .tile{background:var(--color-surface-alt);border-radius:var(--radius-card);padding:18px;
+  min-height:112px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;
+  transition:transform var(--dur-fast) var(--ease-ios);}
+.launcher .tile:active{transform:scale(.97);}
+.launcher .tile .name{font:var(--type-body-emph);}
+.launcher .tile .badge{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--color-surface);
+  display:flex;align-items:center;justify-content:center;}
+
+.kit-empty{padding:80px 24px;text-align:center;color:var(--color-text-muted);font:var(--type-callout);}
